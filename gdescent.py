@@ -1,29 +1,43 @@
 # -*- coding: utf-8 -*-
 import numpy as np
+import matplotlib.pyplot as plt
 
-theta1_true = 0.3
-x = np.linspace(-1, 1, 10)
-y = theta1_true * x
+X = 5 * np.random.rand(100, 1)
+y = 1.5 + 4 * X + np.random.randn(100, 1)
 
 
-def calc_cost(x, y, theta1):
+def calc_cost(thetas, X, y):
     m = len(y)
-    total = 0
-    for i in range(m):
-        squared_error = (y[i] - theta1 * x) ** 2
-        total += squared_error
+    predictions = np.dot(X, thetas)
+    cost = (1/2*m) * np.sum(np.square(predictions-y))
 
-    return total * (1 / (2 * m))
+    return cost
 
 
-N = 50
-alpha = 1
-theta1 = [0]
-J = [calc_cost(x, y, 0)[0]]
-for j in range(N-1):
-    last_theta1 = theta1[-1]
-    this_theta1 = last_theta1 - alpha / len(y) * np.sum((x * last_theta1 - y) * x)
-    theta1.append(this_theta1)
+def gradient_descent(X, y, alpha=0.1, iterations=100000):
+    m = len(y)
+    thetas = np.random.randn(2, 1)
+    cost = np.zeros(iterations)
+    for i in range(iterations):
+        prediction = np.dot(X, thetas)
+        thetas = thetas - alpha * (1/m) * np.dot(np.transpose(X), (prediction-y))
+        cost[i] = calc_cost(thetas, X, y)
+    return thetas, cost
 
 
-print(theta1)
+def plot_cost(cost):
+    plt.plot(cost)
+    plt.show()
+
+
+def plot_fit(X, y, thetas):
+    plt.plot(X, y, 'o')
+    plt.plot(X, thetas[1]*X + thetas[0])
+    plt.show()
+
+
+X_b = np.c_[np.ones((len(X), 1)), X]
+thetas, cost = (gradient_descent(X_b, y))
+print(thetas)
+plot_cost(cost)
+plot_fit(X, y, thetas)
