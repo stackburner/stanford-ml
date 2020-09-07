@@ -7,11 +7,11 @@ def main(input: str) -> str:
     """
     Returns a string.
 
-    Parameters:
-        input (str): The string which is the input.
+        Parameters:
+            input (str): The string which is the input.
 
-    Returns:
-        output (str): The string which gets returned.
+        Returns:
+            output (str): The string which gets returned.
     """
 
     output = input
