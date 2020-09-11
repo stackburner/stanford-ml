@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 def calc_cost(thetas, X, y):
     m = len(y)
     predictions = np.dot(X, thetas)
-    cost = (1/2*m) * np.sum(np.square(predictions-y))
+    cost = 1/(2*m) * np.sum(np.square(predictions-y))
 
     return cost
 
