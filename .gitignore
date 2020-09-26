@@ -1,6 +1,5 @@
 .DS_Store
 .idea
-venv.DS_Store
 venv
 __pycache__
 matlab
