@@ -1,3 +1,3 @@
 # Welcome
 
-Some of the basic concepts of machine learning using python.
+Some of the basic concepts of ML implemented using Python.
