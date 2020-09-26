@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
+"""
+(Batch-)Gradient descent algorithm using a sum-of-squared-errors cost function.
+Fits a linear regression model using synthetic training data. Plots the speed of
+convergence, fitted model and validates the results using the normal equation.
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 
 
 def calc_cost(thetas, X, y):
     m = len(y)
-    predictions = np.dot(X, thetas)
+    predictions = X.dot(thetas)
     cost = 1/(2*m) * np.sum(np.square(predictions-y))
 
     return cost
@@ -16,16 +21,15 @@ def gradient_descent(X, y, alpha=0.1, iterations=100000):
     thetas = np.random.randn(2, 1)
     cost = np.zeros(iterations)
     for i in range(iterations):
-        prediction = np.dot(X, thetas)
-        thetas = thetas - alpha * (1/m) * np.dot(np.transpose(X), (prediction-y))
+        prediction = X.dot(thetas)
+        thetas = thetas - alpha * (1 / m) * X.T.dot(prediction - y)
         cost[i] = calc_cost(thetas, X, y)
 
     return thetas, cost
 
 
 def normal_equation(X, y):
-    thetas_ne = np.dot(np.linalg.inv(np.dot(np.transpose(X),X)),
-                       np.dot(np.transpose(X), y))
+    thetas_ne = np.linalg.inv(X.T.dot(X)).dot(X.T.dot(y))
 
     return thetas_ne
 
