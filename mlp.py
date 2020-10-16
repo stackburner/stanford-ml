@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Multilayer (3) perceptron implementation for forward propagation learning. Implements
+Multilayer (3) perceptron implementation for back-propagation learning. Implements
 an artificial neural network trained for handwriting recognition using the MNIST
 dataset.
 """
