@@ -3,7 +3,6 @@
 Multilayer (3) perceptron implementation for back-propagation learning. Implements
 an artificial neural network trained for handwriting recognition using the MNIST
 dataset.
-
 To do:
     - simplification of regularization parameter
     - removal of shallow copying
@@ -148,7 +147,8 @@ class MLP:
         delta_w2_prev = np.zeros(self.w2.shape)
         for i in range(self.epochs):
             self.eta /= (1 + 0.00001 * i)
-            X_data, y_enc = X_data[idx], y_enc[:, np.random.permutation(y_data.shape[0])]
+            idx = np.random.permutation(y_data.shape[0])
+            X_data, y_enc = X_data[idx], y_enc[:, idx]
             batches = np.array_split(range(y_data.shape[0]), self.minibatches)
             for batch in batches:
                 a1, z2, a2, z3, a3 = self._feedforward(X_data[batch], self.w1, self.w2)
@@ -173,5 +173,8 @@ plt.xlabel('Epochs')
 plt.tight_layout()
 plt.show()
 y_train_pred = nn.predict(X_train)
-acc = np.sum(y_train == y_train_pred, axis=0) / X_train.shape[0]
-print('Training accuracy: %.2f%%' % (acc * 100))
+train_acc = np.sum(y_train == y_train_pred, axis=0) / X_train.shape[0]
+print('Training accuracy: %.2f%%' % (train_acc * 100))
+y_test_pred = nn.predict(X_test)
+test_acc = np.sum(y_test == y_test_pred, axis=0) / X_test.shape[0]
+print('Test accuracy: %.2f%%' % (test_acc * 100))
