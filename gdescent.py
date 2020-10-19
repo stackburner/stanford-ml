@@ -2,7 +2,7 @@
 """
 (Batch-)Gradient descent algorithm using a sum-of-squared-errors cost function.
 Fits a linear regression model using synthetic training data. Plots the speed of
-convergence, fitted model and validates the results using the normal equation.
+convergence, the fitted model and validates the results using the normal equation.
 """
 import numpy as np
 import matplotlib.pyplot as plt
