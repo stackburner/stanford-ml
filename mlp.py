@@ -22,7 +22,6 @@ class MLP:
         self.epochs = epochs
         self.eta = eta
         self.alpha = alpha
-        self.decrease_const = decrease_const
         self.minibatches = minibatches
 
 
