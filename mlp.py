@@ -3,24 +3,9 @@
 Multilayer (3) perceptron implementation for back-propagation learning. Implements
 an artificial neural network trained for handwriting recognition using the MNIST
 dataset.
-To do:
-    - simplification of regularization parameter
-    - removal of shallow copying
-    - visualize prediction from dataset
 """
-import os
 import numpy as np
-import matplotlib.pyplot as plt
-from mlxtend.data import loadlocal_mnist
 from scipy.special import expit
-
-
-def load_data(path, kind='train'):
-    labels = os.path.join(path, '%s-labels-idx1-ubyte' % kind)
-    images = os.path.join(path, '%s-images-idx3-ubyte' % kind)
-    images, labels = loadlocal_mnist(images_path=images, labels_path=labels)
-
-    return images, labels
 
 
 class MLP:
@@ -161,20 +146,3 @@ class MLP:
                 delta_w1_prev, delta_w2_prev = delta_w1, delta_w2
 
         return self
-
-
-X_train, y_train = load_data('mnist/', kind='train')
-X_test, y_test = load_data('mnist/', kind='t10k')
-nn = MLP(10, X_train.shape[1], 50)
-nn.fit(X_train, y_train)
-plt.plot(range(len(nn.cost_)), nn.cost_)
-plt.ylabel('Cost')
-plt.xlabel('Epochs')
-plt.tight_layout()
-plt.show()
-y_train_pred = nn.predict(X_train)
-train_acc = np.sum(y_train == y_train_pred, axis=0) / X_train.shape[0]
-print('Training accuracy: %.2f%%' % (train_acc * 100))
-y_test_pred = nn.predict(X_test)
-test_acc = np.sum(y_test == y_test_pred, axis=0) / X_test.shape[0]
-print('Test accuracy: %.2f%%' % (test_acc * 100))
