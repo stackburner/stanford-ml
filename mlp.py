@@ -10,8 +10,8 @@ from scipy.special import expit
 
 class MLP:
 
-    def __init__(self, n_output, n_features, n_hidden,
-                 l1=0, l2=0.1, epochs=1000, eta=0.001,
+    def __init__(self, n_features, epochs, n_hidden=1000,
+                 n_output=10, l1=0, l2=0.1, eta=0.001,
                  alpha=0.001, minibatches=50):
         self.n_output = n_output
         self.n_features = n_features
