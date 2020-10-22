@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Multilayer (3) perceptron implementation for back-propagation learning. Implements
-an artificial neural network trained for handwriting recognition using the MNIST
+an artificial neural network for handwriting recognition using the MNIST
 dataset.
 """
 import numpy as np
@@ -12,7 +12,7 @@ class MLP:
 
     def __init__(self, n_output, n_features, n_hidden,
                  l1=0, l2=0.1, epochs=1000, eta=0.001,
-                 alpha=0.001, decrease_const=0.00001, minibatches=50):
+                 alpha=0.001, minibatches=50):
         self.n_output = n_output
         self.n_features = n_features
         self.n_hidden = n_hidden
@@ -101,7 +101,7 @@ class MLP:
         return cost
 
 
-    def _get_gradient(self, a1, a2, a3, z2, y_enc, w1, w2):
+    def _backpropagate(self, a1, a2, a3, z2, y_enc, w1, w2):
         sigma3 = a3 - y_enc
         z2 = self._add_bias_unit(z2, how='row')
         sigma2 = w2.T.dot(sigma3) * self._activate_gradient(z2)
@@ -135,10 +135,14 @@ class MLP:
             X_data, y_enc = X_data[idx], y_enc[:, idx]
             batches = np.array_split(range(y_data.shape[0]), self.minibatches)
             for batch in batches:
+                # Forward propagation
                 a1, z2, a2, z3, a3 = self._feedforward(X_data[batch], self.w1, self.w2)
+                # Cost calculation
                 cost = self._calc_cost(y_enc[:, batch], a3, self.w1, self.w2)
                 self.cost_.append(cost)
-                grad1, grad2 = self._get_gradient(a1, a2, a3, z2, y_enc[:, batch], self.w1, self.w2)
+                # Backward propagation
+                grad1, grad2 = self._backpropagate(a1, a2, a3, z2, y_enc[:, batch], self.w1, self.w2)
+                # Weight updates
                 delta_w1, delta_w2 = self.eta * grad1, self.eta * grad2
                 self.w1 -= (delta_w1 + (self.alpha * delta_w1_prev))
                 self.w2 -= (delta_w2 + (self.alpha * delta_w2_prev))

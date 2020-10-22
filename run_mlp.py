@@ -24,7 +24,7 @@ def load_data(path, kind='train'):
 X_train, y_train = load_data('mnist/', kind='train')
 X_test, y_test = load_data('mnist/', kind='t10k')
 
-neural_net = MLP(10, X_train.shape[1], 1000)
+neural_net = MLP(10, X_train.shape[1], 10000)
 neural_net.fit(X_train, y_train)
 
 f = open('w1.pckl', 'wb')
