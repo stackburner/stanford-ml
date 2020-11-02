@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 Fits a SVM with linear kernel to plot different decision boundaries based on
-different values for parameter 'C'.
+different values for parameter 'C'. For non-linear decision boundaries try
+a Gaussian kernel via passing the kernel 'rbf' to the SVC.
 """
 import numpy as np
 from sklearn.svm import SVC
